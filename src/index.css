@@ -1,0 +1,101 @@
+:root {
+  font-family: "Silkscreen", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: -3px;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.bg-grad {
+  background: rgb(83, 83, 83);
+  background: -moz-radial-gradient(
+    circle,
+    rgba(83, 83, 83, 1) 0%,
+    rgba(42, 42, 42, 1) 58%,
+    rgba(20, 20, 20, 1) 100%
+  );
+  background: -webkit-radial-gradient(
+    circle,
+    rgba(83, 83, 83, 1) 0%,
+    rgba(42, 42, 42, 1) 58%,
+    rgba(20, 20, 20, 1) 100%
+  );
+  background: radial-gradient(
+    circle,
+    rgba(83, 83, 83, 1) 0%,
+    rgba(42, 42, 42, 1) 58%,
+    rgba(20, 20, 20, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#535353",endColorstr="#141414",GradientType=1);
+}
+.app-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  color: #edf0f2;
+  font-weight: 300;
+}
+.content {
+  padding: 10rem;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+
+.logo {
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+  height: 8vh;
+  font-size: clamp(14px, 2vh, 42px);
+}
+.logo-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  /* margin-top: -25%; */
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 50%;
+  text-align: center;
+  text-shadow: 1px 1px 70px black;
+  font-weight: 700;
+}
+svg {
+  display: block;
+  max-height: 100%;
+  width: min-content;
+}
+.text > div:nth-child(1) {
+  font-size: clamp(18px, 2vh + 0.5rem, 58px);
+}
+.text > div:nth-child(3) {
+  font-size: clamp(18px, 2.5vh + 0.5rem, 58px);
+}
+
+.text > div:nth-child(4) {
+  font-size: clamp(18px, 1.5vh + 0.5rem, 58px);
+  font-weight: 300;
+}
+
+.text > span {
+  font-size: 15px;
+  font-weight: 300;
+}
