@@ -73,6 +73,7 @@ const Mint = () => {
       totalSupply,
     });
   };
+
   //   type 2 pending
   //   type 1 success
 
@@ -136,7 +137,7 @@ const Mint = () => {
             }}
             className=""
           >
-            {proofWl ? "Mint!" : "Not Whitelisted :/"}
+            {proofWl ? "Mint!" : "Not Whitelisted"}
           </button>
         </>
       );
@@ -173,7 +174,7 @@ const Mint = () => {
       );
     }
   };
-  console.log(tx);
+
   const handleMintCount = (newMintCount) => {
     if (!data?.maxPerPub || !data?.maxPerWl) return 0;
     const maxAmount = data?.wlStatus ? data?.maxPerWl : data?.maxPerPub;
@@ -209,12 +210,16 @@ const Mint = () => {
     <>
       {address ? (
         <>
+          <div>{`${data?.totalSupply} / ${data?.maxSupply} Minted`}</div>
           {renderMintButton()}
+
           {counter()}
           {
             <div className="info">
               <div>
-                {proofWl && data?.wlStatus ? "You are whitelisted !!" : ""}
+                {proofWl && data?.wlStatus
+                  ? "You are whitelisted !!"
+                  : "Not whitelisted !"}
               </div>
               <div>{renderNotification()}</div>
             </div>
