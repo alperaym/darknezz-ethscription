@@ -1,26 +1,24 @@
-import { ReactComponent as Logo } from "../src/assets/logo.svg";
-
+import Content from "./Content";
+import { WagmiConfig } from "wagmi";
+import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
+import { goerli, mainnet } from "viem/chains";
+const chains = [mainnet];
+const projectId = "f767cd91b4e882cab1822bf98d413809";
+const metadata = {
+  name: "Darknezz.",
+  description: "Connect Darknezz",
+  url: "https://web3modal.com",
+  icons: ["https://avatars.githubusercontent.com/u/37784886"],
+};
+const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
+createWeb3Modal({ wagmiConfig, projectId, chains });
 function App() {
   return (
-    <div className="app-container bg-grad ">
-      <div className="content">
-        <div className="logo-cont">
-          <div className="logo">
-            <span>DARKNEZZ.</span>
-            <Logo />
-          </div>
-        </div>
-        <div className="text">
-          <div>555 darknezz come from darkness</div>
-          <span> on ethscriptions by alperaym</span>
-          <div>designer : alperaym.eth manager : elsvastika.eth</div>
-          <div>
-            Inspired by cryptopunks, 555 darknezz skulls have already become a
-            part of this culture!
-          </div>
-        </div>
+    <WagmiConfig config={wagmiConfig}>
+      <div className="app-container bg-grad ">
+        <Content />
       </div>
-    </div>
+    </WagmiConfig>
   );
 }
 

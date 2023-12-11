@@ -26,13 +26,13 @@
   );
   background: -webkit-radial-gradient(
     circle,
-    rgba(83, 83, 83, 1) 0%,
+    rgb(35, 35, 35) 0%,
     rgba(42, 42, 42, 1) 58%,
     rgba(20, 20, 20, 1) 100%
   );
   background: radial-gradient(
     circle,
-    rgba(83, 83, 83, 1) 0%,
+    rgb(58, 56, 56) 0%,
     rgba(42, 42, 42, 1) 58%,
     rgba(20, 20, 20, 1) 100%
   );
@@ -54,18 +54,28 @@
   align-items: center;
   gap: 4rem;
 }
-
-.logo {
+.row {
   display: flex;
   justify-content: baseline;
   align-items: center;
   height: 8vh;
   font-size: clamp(14px, 2vh, 42px);
 }
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+  height: 100%;
+  font-size: clamp(14px, 2vh, 42px);
+}
 .logo-cont {
   display: flex;
   flex-direction: column;
   justify-content: start;
+  align-items: center;
+  height: 100%;
   /* margin-top: -25%; */
 }
 
@@ -98,4 +108,72 @@ svg {
 .text > span {
   font-size: 15px;
   font-weight: 300;
+}
+.connect {
+  border-radius: 3px;
+  background-color: #a3c60a;
+  border: 1px solid #5d8605;
+}
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Silkscreen", sans-serif;
+  text-decoration: none;
+  border: none;
+  height: 35px;
+  width: 150px;
+  cursor: pointer;
+}
+button:hover {
+  scale: 1.05;
+  transition: all 200ms linear;
+
+  filter: brightness(1.1);
+}
+button > svg {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.mint-button-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.mint-button-container > button {
+  width: 20%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+@keyframes warningAnimation {
+  0% {
+    color: red;
+  }
+  50% {
+    color: white;
+  }
+  100% {
+    color: red;
+  }
+}
+
+.warning-text {
+  animation: warningAnimation 1.5s infinite;
+}
+.success-text {
+  color: greenyellow;
 }
