@@ -108,11 +108,13 @@ const Mint = () => {
           : 0,
       });
       console.log(tx);
+      setTx(tx);
       const receipt = await tx.wait();
-
+      setTx(tx);
       console.log("Transaction mined:", receipt);
     } catch (error) {
       console.error("Error minting:", error);
+      setTx(error);
     }
   };
 
@@ -171,6 +173,7 @@ const Mint = () => {
       );
     }
   };
+  console.log(tx);
   const handleMintCount = (newMintCount) => {
     if (!data?.maxPerPub || !data?.maxPerWl) return 0;
     const maxAmount = data?.wlStatus ? data?.maxPerWl : data?.maxPerPub;
