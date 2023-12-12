@@ -1,5 +1,5 @@
 {
-  "contractAddress": "0x22b27b220c4dADC26D1F12E0E93A7373f0B8265b",
+  "contractAddress": "0xeca1033f225D6344Ea22F49bbBDeC95eEA8a3239",
   "abi": [
     { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
     { "inputs": [], "name": "InvalidValue", "type": "error" },
@@ -74,6 +74,24 @@
       "inputs": [],
       "name": "WL_PRICE",
       "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "address", "name": "_address", "type": "address" }
+      ],
+      "name": "getBalance",
+      "outputs": [{ "internalType": "uint16", "name": "", "type": "uint16" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "address", "name": "_address", "type": "address" }
+      ],
+      "name": "getWlBalance",
+      "outputs": [{ "internalType": "uint16", "name": "", "type": "uint16" }],
       "stateMutability": "view",
       "type": "function"
     },

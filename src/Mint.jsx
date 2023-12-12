@@ -44,34 +44,37 @@ const Mint = () => {
     getInfo();
   }, [address]);
 
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const contract = new ethers.Contract(
-    config.contractAddress,
-    config.abi,
-    signer
-  );
-
   const getInfo = async () => {
-    const wlStatus = await contract.wlMintActive();
-    const publicStatus = await contract.mintActive();
-    const wlPrice = await contract.WL_PRICE();
-    const publicPrice = await contract.PRICE();
-    const maxPerPub = await contract.MAX_PER_WALLET();
-    const maxPerWl = await contract.MAX_PER_WALLET_WL();
-    const maxSupply = await contract.MAX_SUPPLY();
-    const totalSupply = await contract.TOTAL_SUPPLY();
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        config.contractAddress,
+        config.abi,
+        signer
+      );
+      const wlStatus = await contract.wlMintActive();
+      const publicStatus = await contract.mintActive();
+      const wlPrice = await contract.WL_PRICE();
+      const publicPrice = await contract.PRICE();
+      const maxPerPub = await contract.MAX_PER_WALLET();
+      const maxPerWl = await contract.MAX_PER_WALLET_WL();
+      const maxSupply = await contract.MAX_SUPPLY();
+      const totalSupply = await contract.TOTAL_SUPPLY();
 
-    setData({
-      wlStatus,
-      publicStatus,
-      wlPrice,
-      publicPrice,
-      maxPerPub,
-      maxPerWl,
-      maxSupply,
-      totalSupply,
-    });
+      setData({
+        wlStatus,
+        publicStatus,
+        wlPrice,
+        publicPrice,
+        maxPerPub,
+        maxPerWl,
+        maxSupply,
+        totalSupply,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   //   type 2 pending
@@ -217,9 +220,11 @@ const Mint = () => {
           {
             <div className="info">
               <div>
-                {proofWl && data?.wlStatus
-                  ? "You are whitelisted !!"
-                  : "Not whitelisted !"}
+                {data?.wlStatus
+                  ? proofWl
+                    ? "You are whitelisted !!"
+                    : "Not whitelisted !"
+                  : ""}
               </div>
               <div>{renderNotification()}</div>
             </div>
