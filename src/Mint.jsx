@@ -1,13 +1,17 @@
-import { ethers } from "ethers";
-import AppConfig from "../config.json";
-import { useState, useEffect } from "react";
 import {
-  useWaitForTransaction,
-  useAccount,
   useContractWrite,
   usePrepareContractWrite,
+  useContractRead,
+  useWaitForTransaction,
+  useAccount,
 } from "wagmi";
+
+import { useState, useEffect, useRef } from "react";
+
+import AppConfig from "../config.json";
+
 import { AiOutlineLoading } from "react-icons/ai";
+
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue } from "firebase/database";
 
@@ -24,10 +28,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const Mint = () => {
-  const [data, setData] = useState(null);
   const [proofWl, setProofWl] = useState("");
+  const [error, setError] = useState("");
+
   const [mintCount, setMintCount] = useState(1);
-  const [tx, setTx] = useState(null);
+
   const { address, isConnecting, isDisconnected, isConnected } = useAccount();
 
   const firebaseWl = (address) => {
@@ -41,207 +46,288 @@ const Mint = () => {
       if (data) setProofWl(data);
     });
   };
-
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const contract = new ethers.Contract(
-    AppConfig.contractAddress,
-    AppConfig.abi,
-    signer
-  );
-
   //   track address change and get proofs
-
   useEffect(() => {
     firebaseWl(address);
-    getInfo();
   }, [address]);
 
-  const getInfo = async () => {
-    try {
-      const wlStatus = await contract.wlMintActive();
-      const publicStatus = await contract.mintActive();
-      const wlPrice = await contract.WL_PRICE();
-      const publicPrice = await contract.PRICE();
-      const maxPerPub = await contract.MAX_PER_WALLET();
-      const maxPerWl = await contract.MAX_PER_WALLET_WL();
-      const maxSupply = await contract.MAX_SUPPLY();
-      const totalSupply = await contract.TOTAL_SUPPLY();
-
-      setData({
-        wlStatus,
-        publicStatus,
-        wlPrice,
-        publicPrice,
-        maxPerPub,
-        maxPerWl,
-        maxSupply,
-        totalSupply,
-      });
-    } catch (e) {
-      console.log(e);
+  //   Cut error message string
+  function cutString(inputString) {
+    const dotIndex = inputString.indexOf(".");
+    const regex =
+      /The contract function "[^"]+" reverted with the following reason:\n(.*?)\n/;
+    const match = inputString.match(regex);
+    if (match && match[1]) {
+      const extractedString = match[1];
+      return extractedString;
     }
-  };
-
-  //   type 2 pending
-  //   type 1 success
-
-  //PUBLIC MINT
-  const publicMint = async () => {
-    try {
-      const tx = await contract.mint(mintCount, {
-        value:
-          BigInt(data?.publicPrice ? data?.publicPrice : 0) * BigInt(mintCount),
-      });
-      setTx(tx);
-      const receipt = await tx.wait();
-      setTx(tx);
-      console.log("Transaction mined:", receipt);
-    } catch (error) {
-      console.error("Error minting:", error);
-      setTx(error);
+    if (dotIndex !== -1) {
+      return inputString.substring(0, dotIndex);
+    } else {
+      return inputString;
     }
-  };
-  //WL MINT
-  const wlMint = async () => {
-    console.log(
-      "value:",
-      ethers.BigNumber.from(data?.wlPrice).mul(ethers.BigNumber.from(mintCount))
-    );
+  }
 
-    try {
-      const tx = await contract.wlMint(mintCount, proofWl, {
-        value: data?.wlPrice
-          ? ethers.BigNumber.from(data?.wlPrice).mul(
-              ethers.BigNumber.from(mintCount)
-            )
-          : 0,
-      });
-      console.log(tx);
-      setTx(tx);
-      const receipt = await tx.wait();
-      setTx(tx);
-      console.log("Transaction mined:", receipt);
-    } catch (error) {
-      console.error("Error minting:", error);
-      setTx(error);
-    }
-  };
+  //   Read If wl minting active
+  const {
+    data: mintingStatusWl,
+    isError: isWlMintingStatusError,
+    isLoading: isWlMintingStatusLoading,
+  } = useContractRead({
+    address: AppConfig.contractAddress,
+    abi: AppConfig.abi,
+    functionName: `wlMintActive`,
+    watch: true,
+  });
+  //   Read If og minting active
 
-  const renderMintButton = () => {
-    if (!data)
+  //   Read If public minting active
+  const {
+    data: mintingStatusPublic,
+    isError: isPublicMintingStatusError,
+    isLoading: isPublicMintingStatusLoading,
+  } = useContractRead({
+    address: AppConfig.contractAddress,
+    abi: AppConfig.abi,
+    functionName: `mintActive`,
+    watch: true,
+  });
+  // max Per Wl user
+  const {
+    data: maxPerWl,
+    isError: isMaxPerWlError,
+    isLoading: isMaxPerWlLoading,
+  } = useContractRead({
+    address: AppConfig.contractAddress,
+    abi: AppConfig.abi,
+    functionName: `MAX_PER_WALLET_WL`,
+  });
+
+  // max Per pub user
+  const {
+    data: maxPerPublic,
+    isError: isMaxPerPublicError,
+    isLoading: isMaxPerPublicLoading,
+  } = useContractRead({
+    address: AppConfig.contractAddress,
+    abi: AppConfig.abi,
+    functionName: `MAX_PER_WALLET`,
+  });
+
+  //   Read Mint Price wl
+  const {
+    data: priceWl,
+    isError: isPriceWlError,
+    isLoading: isPriceWlLoading,
+  } = useContractRead({
+    address: AppConfig.contractAddress,
+    abi: AppConfig.abi,
+    functionName: `WL_PRICE`,
+  });
+
+  //   read mint price PUBLIC
+  const {
+    data: pricePublic,
+    isError: isPricePublicError,
+    isLoading: isPricePublicLoading,
+  } = useContractRead({
+    address: AppConfig.contractAddress,
+    abi: AppConfig.abi,
+    functionName: `PRICE`,
+  });
+  //   read totalSup
+  const {
+    data: totalSupply,
+    isError: isTotalSupplyError,
+    isLoading: isTotalSupplyLoading,
+  } = useContractRead({
+    address: AppConfig.contractAddress,
+    abi: AppConfig.abi,
+    functionName: `TOTAL_SUPPLY`,
+  });
+
+  //read max supp
+  const {
+    data: maxSupply,
+    isError: isMaxSupplyError,
+    isLoading: isMaxSupplyLoading,
+  } = useContractRead({
+    address: AppConfig.contractAddress,
+    abi: AppConfig.abi,
+    functionName: `MAX_SUPPLY`,
+  });
+
+  // -------------------------------------------------
+
+  const whitelistMint = () => {
+    const { config: config } = usePrepareContractWrite({
+      address: AppConfig.contractAddress,
+      abi: AppConfig.abi,
+      functionName: "wlMint",
+      args: [mintCount, [...proofWl]],
+      value: BigInt(isPriceWlLoading ? 0 : priceWl) * BigInt(mintCount),
+      onError(error) {
+        setError(error.message);
+      },
+    });
+    const { data, isLoading, isSuccess, write } = useContractWrite(config);
+    // Track tx
+    const {
+      data: watchTx,
+      isError: isWaitTxError,
+      isLoading: isWaitTxLoading,
+    } = useWaitForTransaction({
+      hash: data?.hash,
+    });
+
+    if (!mintingStatusWl) {
       return (
-        <button>
+        <button disabled={true} className="mint-button">
+          Soon !
+        </button>
+      );
+    }
+    if (
+      isLoading ||
+      isWlMintingStatusLoading ||
+      isPriceWlLoading ||
+      isWaitTxLoading
+    ) {
+      return (
+        <button disabled={true} className="mint-button">
           <AiOutlineLoading />
         </button>
       );
-    // WL MINT
-    if (data?.wlStatus) {
-      return (
-        <>
-          <button
-            disabled={proofWl ? false : true}
-            onClick={async () => {
-              await wlMint();
-            }}
-            className=""
-          >
-            {proofWl ? "Mint!" : "Not Whitelisted"}
-          </button>
-        </>
-      );
     }
-    // PUBLIC MINT
-    if (!data?.wlStatus && data?.publicStatus) {
+    if (!proofWl) {
       return (
-        <button
-          onClick={async () => {
-            await publicMint();
-          }}
-          className=""
-        >
-          Mint
+        <button disabled={true} className="mint-button">
+          {` Not WL`}
         </button>
       );
     } else {
-      return <button disabled={true}>Soon</button>;
+      return (
+        <>
+          <button onClick={() => write?.()} className="mint-button">
+            Mint
+          </button>
+          <div className="error-box">
+            <span className="warning-text">
+              {error ? `${cutString(error)}` : ""}
+              {watchTx?.status == "reverted" ? "⚠️ Error While Minting !" : ""}
+            </span>
+            <span className="success-text">
+              {isSuccess ? ` Transaction Succesful !` : ""}
+            </span>
+          </div>
+        </>
+      );
     }
   };
 
-  //RENDER NOTIFICATION
+  // PUBLIC MINT TX
+  const publicMint = () => {
+    const { config: config } = usePrepareContractWrite({
+      address: AppConfig.contractAddress,
+      abi: AppConfig.abi,
+      functionName: "mint",
+      args: [mintCount],
+      value: BigInt(isPricePublicLoading ? 0 : pricePublic) * BigInt(mintCount),
+      onError(error) {
+        setError(error.message);
+      },
+    });
+    const { data, isLoading, isSuccess, write } = useContractWrite(config);
+    // Track tx
+    const {
+      data: watchTx,
+      isError: isWaitTxError,
+      isLoading: isWaitTxLoading,
+    } = useWaitForTransaction({
+      hash: data?.hash,
+    });
 
-  const renderNotification = () => {
-    if (!tx) return;
-    if (tx.status == 1) {
-      return <div className="success-text">You have succesfully Minted! </div>;
+    if (!mintingStatusPublic) {
+      return (
+        <button disabled={true} className="mint-button">
+          Soon !
+        </button>
+      );
     }
-    if (tx.status == 2) {
-      return <div>Transaction pending...</div>;
+    if (
+      isLoading ||
+      isPublicMintingStatusLoading ||
+      isPricePublicLoading ||
+      isWaitTxLoading
+    ) {
+      return (
+        <button disabled={true} className="mint-button">
+          <AiOutlineLoading />
+        </button>
+      );
     } else {
       return (
-        <div className="warning-text">Something unexpected happened !</div>
+        <>
+          <button onClick={() => write?.()} className="mint-button">
+            Mint
+          </button>
+          <div className="error-box fstandard">
+            <span className="warning-text">
+              {error ? `${cutString(error)}` : ""}
+              {watchTx?.status == "reverted" ? "⚠️ Error While Minting !" : ""}
+            </span>
+            <span className="success-text">
+              {isSuccess ? ` Transaction Succesful !` : ""}
+            </span>
+          </div>
+        </>
       );
     }
   };
 
   const handleMintCount = (newMintCount) => {
-    if (!data?.maxPerPub || !data?.maxPerWl) return 0;
-    const maxAmount = data?.wlStatus ? data?.maxPerWl : data?.maxPerPub;
-    setMintCount(
-      newMintCount > 0 && newMintCount <= maxAmount ? newMintCount : mintCount
-    );
-  };
+    const max = proofOg ? maxPerOg : proofWl ? maxPerWl : 100;
 
-  const counter = () => {
-    return (
-      <div
-        className="mint-button-container
-  "
-      >
-        <button
-          onClick={() => handleMintCount(mintCount + 1)}
-          className="counter-button"
-        >
-          +
-        </button>
-        <div className="fstandard jc-center">{mintCount}</div>
-        <button
-          onClick={() => handleMintCount(mintCount - 1)}
-          className="counter-button"
-        >
-          -
-        </button>
-      </div>
-    );
+    if (newMintCount > 0 && newMintCount <= max) {
+      setMintCount(newMintCount);
+    }
   };
 
   return (
     <>
-      {address ? (
-        <>
-          <div>{`${data?.totalSupply ? data?.totalSupply : "???"} / ${
-            data?.maxSupply ? data?.maxSupply : "???"
-          } Minted`}</div>
-          {renderMintButton()}
-
-          {counter()}
-          {
-            <div className="info">
-              <div>
-                {data?.wlStatus
-                  ? proofWl
-                    ? "You are whitelisted !!"
-                    : "Not whitelisted !"
-                  : ""}
-              </div>
-              <div>{renderNotification()}</div>
-            </div>
-          }
-        </>
+      {mintingStatusWl || mintingStatusPublic ? (
+        <div>{`${totalSupply} / ${maxSupply} Minted !`}</div>
       ) : (
-        " "
+        ""
       )}
+      {mintingStatusWl ? whitelistMint() : publicMint()}
+      <div
+        className="flex mint-button-container
+        "
+      >
+        {mintingStatusWl || mintingStatusPublic ? (
+          <>
+            <button
+              onClick={() => handleMintCount(mintCount + 1)}
+              className="counter-button"
+            >
+              +
+            </button>
+            <div>{mintCount}</div>
+            <button
+              onClick={() => handleMintCount(mintCount - 1)}
+              className="counter-button"
+            >
+              -
+            </button>
+          </>
+        ) : (
+          ""
+        )}
+      </div>
+      {mintingStatusWl ? proofWl ? <div>You are whitelisted !</div> : "" : ""}
     </>
   );
 };
+
 export default Mint;

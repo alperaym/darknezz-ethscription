@@ -1,7 +1,7 @@
 import { ReactComponent as Logo } from "../src/assets/logo.svg";
 import Connect from "./Connect";
+
 import Mint from "./Mint";
-import MintBox from "./Mint2";
 const Content = () => {
   return (
     <div className="content">
@@ -12,7 +12,7 @@ const Content = () => {
             <Logo />
           </div>
           <Connect />
-          <MintBox />
+          <Mint />
         </div>
       </div>
       <div className="text">

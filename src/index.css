@@ -38,15 +38,17 @@
   );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#535353",endColorstr="#141414",GradientType=1);
 }
+
 .app-container {
   height: 100vh;
   width: 100vw;
   display: flex;
   color: #edf0f2;
   font-weight: 300;
+  overflow: hidden;
 }
 .content {
-  padding: 10rem;
+  padding: 5vh 10vw;
   height: 100%;
   width: 100%;
   display: flex;
@@ -59,7 +61,7 @@
   justify-content: baseline;
   align-items: center;
   height: 8vh;
-  font-size: clamp(14px, 2vh, 42px);
+  font-size: clamp(14, 2vh, 42px);
 }
 .logo {
   display: flex;
@@ -76,6 +78,7 @@
   justify-content: start;
   align-items: center;
   height: 100%;
+  width: 100%;
   /* margin-top: -25%; */
 }
 
@@ -83,7 +86,7 @@
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  width: 50%;
+  width: 100%;
   text-align: center;
   text-shadow: 1px 1px 70px black;
   font-weight: 700;
@@ -91,17 +94,16 @@
 svg {
   display: block;
   max-height: 100%;
-  width: min-content;
 }
 .text > div:nth-child(1) {
-  font-size: clamp(18px, 2vh + 0.5rem, 58px);
+  font-size: clamp(14px, 2vh, 58px);
 }
 .text > div:nth-child(3) {
-  font-size: clamp(18px, 2.5vh + 0.5rem, 58px);
+  font-size: clamp(14px, 2.5vh, 58px);
 }
 
 .text > div:nth-child(4) {
-  font-size: clamp(18px, 1.5vh + 0.5rem, 58px);
+  font-size: clamp(14px, 1.5vh, 58px);
   font-weight: 300;
 }
 
@@ -170,10 +172,25 @@ button > svg {
     color: red;
   }
 }
-
+.error-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 .warning-text {
   animation: warningAnimation 1.5s infinite;
 }
 .success-text {
   color: greenyellow;
+}
+@media (max-width: 450px) {
+  .content {
+    padding: 5vh 2vw;
+    gap: 0;
+  }
+  .logo {
+    gap: 3rem;
+  }
 }
