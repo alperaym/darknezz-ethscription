@@ -221,7 +221,11 @@ const Mint = () => {
     } else {
       return (
         <>
-          <button onClick={() => write?.()} className="mint-button">
+          <button
+            onClick={() => write?.()}
+            className="mint-button"
+            disabled={mintingStatusWl && userBalance >= maxPerWl}
+          >
             Mint
           </button>
           <div className="error-box">
@@ -281,14 +285,25 @@ const Mint = () => {
     } else {
       return (
         <>
-          <button onClick={() => write?.()} className="mint-button">
+          <button
+            onClick={() => write?.()}
+            className="mint-button"
+            disabled={mintingStatusPublic && userBalance >= maxPerPublic}
+          >
             Mint
           </button>
           <div className="error-box fstandard">
-            <span className="warning-text">
-              {error ? `${cutString(error)}` : ""}
-              {watchTx?.status == "reverted" ? "⚠️ Error While Minting !" : ""}
-            </span>
+            {(mintingStatusWl && userBalance >= maxPerWl) ||
+            (mintingStatusPublic && userBalance >= maxPerPublic) ? (
+              <span className="warning-text">Minting limit reached !</span>
+            ) : (
+              <span className="warning-text">
+                {error && address ? `${cutString(error)}` : ""}
+                {watchTx?.status == "reverted"
+                  ? "⚠️ Error While Minting !"
+                  : ""}
+              </span>
+            )}
             <span className="success-text">
               {isSuccess ? ` Transaction Succesful !` : ""}
             </span>
