@@ -1,7 +1,12 @@
 import { ethers } from "ethers";
-import config from "../config.json";
+import AppConfig from "../config.json";
 import { useState, useEffect } from "react";
-import { useWaitForTransaction, useAccount } from "wagmi";
+import {
+  useWaitForTransaction,
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+} from "wagmi";
 import { AiOutlineLoading } from "react-icons/ai";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue } from "firebase/database";
@@ -37,6 +42,14 @@ const Mint = () => {
     });
   };
 
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(
+    AppConfig.contractAddress,
+    AppConfig.abi,
+    signer
+  );
+
   //   track address change and get proofs
 
   useEffect(() => {
@@ -46,13 +59,6 @@ const Mint = () => {
 
   const getInfo = async () => {
     try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        config.contractAddress,
-        config.abi,
-        signer
-      );
       const wlStatus = await contract.wlMintActive();
       const publicStatus = await contract.mintActive();
       const wlPrice = await contract.WL_PRICE();
@@ -83,7 +89,7 @@ const Mint = () => {
   //PUBLIC MINT
   const publicMint = async () => {
     try {
-      const tx = await contract.mint(6666, {
+      const tx = await contract.mint(mintCount, {
         value:
           BigInt(data?.publicPrice ? data?.publicPrice : 0) * BigInt(mintCount),
       });
@@ -213,7 +219,9 @@ const Mint = () => {
     <>
       {address ? (
         <>
-          <div>{`${data?.totalSupply} / ${data?.maxSupply} Minted`}</div>
+          <div>{`${data?.totalSupply ? data?.totalSupply : "???"} / ${
+            data?.maxSupply ? data?.maxSupply : "???"
+          } Minted`}</div>
           {renderMintButton()}
 
           {counter()}
