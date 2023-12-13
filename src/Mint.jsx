@@ -144,6 +144,7 @@ const Mint = () => {
     address: AppConfig.contractAddress,
     abi: AppConfig.abi,
     functionName: `TOTAL_SUPPLY`,
+    watch: true,
   });
 
   //read max supp
@@ -155,6 +156,18 @@ const Mint = () => {
     address: AppConfig.contractAddress,
     abi: AppConfig.abi,
     functionName: `MAX_SUPPLY`,
+  });
+  //read user balance
+  const {
+    data: userBalance,
+    isError: isUserBalanceError,
+    isLoading: isUserBalanceLoading,
+  } = useContractRead({
+    address: AppConfig.contractAddress,
+    abi: AppConfig.abi,
+    args: [address],
+    functionName: `getBalance`,
+    watch: true,
   });
 
   // -------------------------------------------------
@@ -286,7 +299,9 @@ const Mint = () => {
   };
 
   const handleMintCount = (newMintCount) => {
-    const max = proofOg ? maxPerOg : proofWl ? maxPerWl : 100;
+    const max =
+      (mintingStatusWl ? maxPerWl : mintingStatusPublic ? maxPerPublic : 8) -
+      userBalance;
 
     if (newMintCount > 0 && newMintCount <= max) {
       setMintCount(newMintCount);
@@ -305,7 +320,7 @@ const Mint = () => {
         className="flex mint-button-container
         "
       >
-        {mintingStatusWl || mintingStatusPublic ? (
+        {mintingStatusWl || (mintingStatusPublic && address) ? (
           <>
             <button
               onClick={() => handleMintCount(mintCount + 1)}

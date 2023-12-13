@@ -123,9 +123,10 @@ button {
   font-family: "Silkscreen", sans-serif;
   text-decoration: none;
   border: none;
-  height: 35px;
-  width: 150px;
+  height: calc(30px + 1.5vh);
+  width: calc(100px + 7vw);
   cursor: pointer;
+  font-size: clamp(14px, 1vh, 58px);
 }
 button:hover {
   scale: 1.05;
