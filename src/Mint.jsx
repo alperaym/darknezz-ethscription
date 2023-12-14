@@ -4,6 +4,7 @@ import {
   useContractRead,
   useWaitForTransaction,
   useAccount,
+  useNetwork,
 } from "wagmi";
 
 import { useState, useEffect, useRef } from "react";
@@ -34,7 +35,7 @@ const Mint = () => {
   const [mintCount, setMintCount] = useState(1);
 
   const { address, isConnecting, isDisconnected, isConnected } = useAccount();
-
+  const { chain, chains } = useNetwork();
   const firebaseWl = (address) => {
     const db = getDatabase(app);
 
@@ -78,6 +79,7 @@ const Mint = () => {
     abi: AppConfig.abi,
     functionName: `wlMintActive`,
     watch: true,
+    chainId: 5,
   });
   //   Read If og minting active
 
@@ -91,6 +93,7 @@ const Mint = () => {
     abi: AppConfig.abi,
     functionName: `mintActive`,
     watch: true,
+    chainId: 5,
   });
   // max Per Wl user
   const {
@@ -101,6 +104,7 @@ const Mint = () => {
     address: AppConfig.contractAddress,
     abi: AppConfig.abi,
     functionName: `MAX_PER_WALLET_WL`,
+    chainId: 5,
   });
 
   // max Per pub user
@@ -112,6 +116,7 @@ const Mint = () => {
     address: AppConfig.contractAddress,
     abi: AppConfig.abi,
     functionName: `MAX_PER_WALLET`,
+    chainId: 5,
   });
 
   //   Read Mint Price wl
@@ -123,6 +128,7 @@ const Mint = () => {
     address: AppConfig.contractAddress,
     abi: AppConfig.abi,
     functionName: `WL_PRICE`,
+    chainId: 5,
   });
 
   //   read mint price PUBLIC
@@ -134,6 +140,7 @@ const Mint = () => {
     address: AppConfig.contractAddress,
     abi: AppConfig.abi,
     functionName: `PRICE`,
+    chainId: 5,
   });
   //   read totalSup
   const {
@@ -145,6 +152,7 @@ const Mint = () => {
     abi: AppConfig.abi,
     functionName: `TOTAL_SUPPLY`,
     watch: true,
+    chainId: 5,
   });
 
   //read max supp
@@ -156,8 +164,9 @@ const Mint = () => {
     address: AppConfig.contractAddress,
     abi: AppConfig.abi,
     functionName: `MAX_SUPPLY`,
+    chainId: 5,
   });
-  //read user balance
+  //read user public balance
   const {
     data: userBalance,
     isError: isUserBalanceError,
@@ -168,8 +177,21 @@ const Mint = () => {
     args: [address],
     functionName: `getBalance`,
     watch: true,
+    chainId: 5,
   });
-
+  //read user wl public balance
+  const {
+    data: userWlBalance,
+    isError: isUserWlBalanceError,
+    isLoading: isUserWlBalanceLoading,
+  } = useContractRead({
+    address: AppConfig.contractAddress,
+    abi: AppConfig.abi,
+    args: [address],
+    functionName: `getWlBalance`,
+    watch: true,
+    chainId: 5,
+  });
   // -------------------------------------------------
 
   const whitelistMint = () => {
@@ -177,6 +199,7 @@ const Mint = () => {
       address: AppConfig.contractAddress,
       abi: AppConfig.abi,
       functionName: "wlMint",
+      chainId: 5,
       args: [mintCount, [...proofWl]],
       value: BigInt(isPriceWlLoading ? 0 : priceWl) * BigInt(mintCount),
       onError(error) {
@@ -224,15 +247,24 @@ const Mint = () => {
           <button
             onClick={() => write?.()}
             className="mint-button"
-            disabled={mintingStatusWl && userBalance >= maxPerWl}
+            disabled={
+              (mintingStatusWl && userWlBalance >= maxPerWl) || !address
+            }
           >
             Mint
           </button>
           <div className="error-box">
-            <span className="warning-text">
-              {error ? `${cutString(error)}` : ""}
-              {watchTx?.status == "reverted" ? "⚠️ Error While Minting !" : ""}
-            </span>
+            {(mintingStatusWl && userWlBalance >= maxPerWl) ||
+            (mintingStatusPublic && userBalance >= maxPerPublic) ? (
+              <span className="warning-text">Minting limit reached !</span>
+            ) : (
+              <span className="warning-text">
+                {error && address ? `${cutString(error)}` : ""}
+                {watchTx?.status == "reverted"
+                  ? "⚠️ Error While Minting !"
+                  : ""}
+              </span>
+            )}
             <span className="success-text">
               {isSuccess ? ` Transaction Succesful !` : ""}
             </span>
@@ -248,6 +280,7 @@ const Mint = () => {
       address: AppConfig.contractAddress,
       abi: AppConfig.abi,
       functionName: "mint",
+      chainId: 5,
       args: [mintCount],
       value: BigInt(isPricePublicLoading ? 0 : pricePublic) * BigInt(mintCount),
       onError(error) {
@@ -288,12 +321,14 @@ const Mint = () => {
           <button
             onClick={() => write?.()}
             className="mint-button"
-            disabled={mintingStatusPublic && userBalance >= maxPerPublic}
+            disabled={
+              (mintingStatusPublic && userBalance >= maxPerPublic) || !address
+            }
           >
             Mint
           </button>
           <div className="error-box fstandard">
-            {(mintingStatusWl && userBalance >= maxPerWl) ||
+            {(mintingStatusWl && userWlBalance >= maxPerWl) ||
             (mintingStatusPublic && userBalance >= maxPerPublic) ? (
               <span className="warning-text">Minting limit reached !</span>
             ) : (
@@ -315,8 +350,11 @@ const Mint = () => {
 
   const handleMintCount = (newMintCount) => {
     const max =
-      (mintingStatusWl ? maxPerWl : mintingStatusPublic ? maxPerPublic : 8) -
-      userBalance;
+      (mintingStatusWl
+        ? Number(maxPerWl)
+        : mintingStatusPublic
+        ? Number(maxPerPublic)
+        : 8) - (mintingStatusWl ? userWlBalance : userBalance);
 
     if (newMintCount > 0 && newMintCount <= max) {
       setMintCount(newMintCount);
@@ -335,7 +373,7 @@ const Mint = () => {
         className="flex mint-button-container
         "
       >
-        {mintingStatusWl || (mintingStatusPublic && address) ? (
+        {(mintingStatusWl || mintingStatusPublic) && address ? (
           <>
             <button
               onClick={() => handleMintCount(mintCount + 1)}
@@ -355,7 +393,15 @@ const Mint = () => {
           ""
         )}
       </div>
-      {mintingStatusWl ? proofWl ? <div>You are whitelisted !</div> : "" : ""}
+      {mintingStatusWl && address ? (
+        proofWl ? (
+          <div>You are whitelisted !</div>
+        ) : (
+          <div>You are not whitelisted :/</div>
+        )
+      ) : (
+        ""
+      )}
     </>
   );
 };
