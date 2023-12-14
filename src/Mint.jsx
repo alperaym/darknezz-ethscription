@@ -235,7 +235,7 @@ const Mint = () => {
         </button>
       );
     }
-    if (!proofWl) {
+    if (!proofWl && address) {
       return (
         <button disabled={true} className="mint-button">
           {` Not WL`}
@@ -248,7 +248,9 @@ const Mint = () => {
             onClick={() => write?.()}
             className="mint-button"
             disabled={
-              (mintingStatusWl && userWlBalance >= maxPerWl) || !address
+              (mintingStatusWl && userWlBalance >= maxPerWl) ||
+              !address ||
+              chain.id != 5
             }
           >
             Mint
@@ -322,7 +324,9 @@ const Mint = () => {
             onClick={() => write?.()}
             className="mint-button"
             disabled={
-              (mintingStatusPublic && userBalance >= maxPerPublic) || !address
+              (mintingStatusPublic && userBalance >= maxPerPublic) ||
+              !address ||
+              chain.id != 5
             }
           >
             Mint

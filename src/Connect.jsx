@@ -1,4 +1,4 @@
-import { useWeb3Modal } from "@web3modal/react";
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 
 export default function Connect() {
@@ -23,7 +23,6 @@ export default function Connect() {
           className="connect"
           onClick={() => {
             open();
-            console.log("here");
           }}
         >
           Connect Wallet
