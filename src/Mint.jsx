@@ -15,7 +15,7 @@ import { AiOutlineLoading } from "react-icons/ai";
 
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue } from "firebase/database";
-
+/// darknezzz
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: "ethscription-c3ed4.firebaseapp.com",
