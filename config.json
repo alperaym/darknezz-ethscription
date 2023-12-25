@@ -1,7 +1,13 @@
 {
-  "contractAddress": "0xfbeff61e5fc75ec1089adb4410930d0d8310b9ae",
+  "contractAddress": "0xfbEFF61e5fc75EC1089AdB4410930d0D8310B9aE",
   "abi": [
-    { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+    {
+      "inputs": [
+        { "internalType": "bytes32", "name": "_merkleRoot", "type": "bytes32" }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
     { "inputs": [], "name": "InvalidValue", "type": "error" },
     { "inputs": [], "name": "MaxSupplyReached", "type": "error" },
     { "inputs": [], "name": "MintNotActive", "type": "error" },

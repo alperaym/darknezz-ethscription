@@ -200,7 +200,7 @@ const Mint = () => {
       abi: AppConfig.abi,
       functionName: "wlMint",
       chainId: 1,
-      args: [mintCount, [...proofWl]],
+      args: [1, [...proofWl]],
       value: BigInt(isPriceWlLoading ? 0 : priceWl) * BigInt(mintCount),
       enabled: false,
       onError(error) {
@@ -246,7 +246,9 @@ const Mint = () => {
       return (
         <>
           <button
-            onClick={() => write?.()}
+            onClick={() => {
+              write?.();
+            }}
             className="mint-button"
             disabled={
               (mintingStatusWl && userWlBalance >= maxPerWl) ||
