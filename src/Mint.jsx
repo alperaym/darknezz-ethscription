@@ -44,7 +44,10 @@ const Mint = () => {
     onValue(reference, (snapshot) => {
       const data = snapshot.val();
 
-      if (data) setProofWl(data);
+      if (data) {
+        setProofWl(data);
+        if (error == "Invalid proof") setError("");
+      }
     });
   };
   //   track address change and get proofs
