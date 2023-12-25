@@ -1,4 +1,5 @@
 import { useWeb3Modal } from "@web3modal/wagmi/react";
+import { useEffect } from "react";
 import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
 
 export default function Connect() {

@@ -1,5 +1,5 @@
 {
-  "contractAddress": "0xeca1033f225D6344Ea22F49bbBDeC95eEA8a3239",
+  "contractAddress": "0xfA5957f821C3ab2AEd1D3168db313F18405bBB0E",
   "abi": [
     { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
     { "inputs": [], "name": "InvalidValue", "type": "error" },

@@ -202,6 +202,7 @@ const Mint = () => {
       chainId: 5,
       args: [mintCount, [...proofWl]],
       value: BigInt(isPriceWlLoading ? 0 : priceWl) * BigInt(mintCount),
+      enabled: false,
       onError(error) {
         setError(error.message);
       },
