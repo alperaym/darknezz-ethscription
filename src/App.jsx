@@ -11,7 +11,7 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 function App() {
-  const chains = [goerli, mainnet];
+  const chains = [mainnet];
 
   const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
   createWeb3Modal({ wagmiConfig, projectId, chains });

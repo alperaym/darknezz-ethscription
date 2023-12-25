@@ -12,10 +12,10 @@ export default function Connect() {
   return (
     <>
       {address ? (
-        chain?.id == 5 ? (
+        chain?.id == 1 ? (
           <w3m-account-button />
         ) : (
-          <button className="connect" onClick={() => switchNetwork(5)}>
+          <button className="connect" onClick={() => switchNetwork(1)}>
             Switch to Mainnet
           </button>
         )

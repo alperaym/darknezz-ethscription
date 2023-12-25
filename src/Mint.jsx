@@ -79,7 +79,7 @@ const Mint = () => {
     abi: AppConfig.abi,
     functionName: `wlMintActive`,
     watch: true,
-    chainId: 5,
+    chainId: 1,
   });
   //   Read If og minting active
 
@@ -93,7 +93,7 @@ const Mint = () => {
     abi: AppConfig.abi,
     functionName: `mintActive`,
     watch: true,
-    chainId: 5,
+    chainId: 1,
   });
   // max Per Wl user
   const {
@@ -104,7 +104,7 @@ const Mint = () => {
     address: AppConfig.contractAddress,
     abi: AppConfig.abi,
     functionName: `MAX_PER_WALLET_WL`,
-    chainId: 5,
+    chainId: 1,
   });
 
   // max Per pub user
@@ -116,7 +116,7 @@ const Mint = () => {
     address: AppConfig.contractAddress,
     abi: AppConfig.abi,
     functionName: `MAX_PER_WALLET`,
-    chainId: 5,
+    chainId: 1,
   });
 
   //   Read Mint Price wl
@@ -128,7 +128,7 @@ const Mint = () => {
     address: AppConfig.contractAddress,
     abi: AppConfig.abi,
     functionName: `WL_PRICE`,
-    chainId: 5,
+    chainId: 1,
   });
 
   //   read mint price PUBLIC
@@ -140,7 +140,7 @@ const Mint = () => {
     address: AppConfig.contractAddress,
     abi: AppConfig.abi,
     functionName: `PRICE`,
-    chainId: 5,
+    chainId: 1,
   });
   //   read totalSup
   const {
@@ -152,7 +152,7 @@ const Mint = () => {
     abi: AppConfig.abi,
     functionName: `TOTAL_SUPPLY`,
     watch: true,
-    chainId: 5,
+    chainId: 1,
   });
 
   //read max supp
@@ -164,7 +164,7 @@ const Mint = () => {
     address: AppConfig.contractAddress,
     abi: AppConfig.abi,
     functionName: `MAX_SUPPLY`,
-    chainId: 5,
+    chainId: 1,
   });
   //read user public balance
   const {
@@ -177,7 +177,7 @@ const Mint = () => {
     args: [address],
     functionName: `getBalance`,
     watch: true,
-    chainId: 5,
+    chainId: 1,
   });
   //read user wl public balance
   const {
@@ -190,7 +190,7 @@ const Mint = () => {
     args: [address],
     functionName: `getWlBalance`,
     watch: true,
-    chainId: 5,
+    chainId: 1,
   });
   // -------------------------------------------------
 
@@ -199,7 +199,7 @@ const Mint = () => {
       address: AppConfig.contractAddress,
       abi: AppConfig.abi,
       functionName: "wlMint",
-      chainId: 5,
+      chainId: 1,
       args: [mintCount, [...proofWl]],
       value: BigInt(isPriceWlLoading ? 0 : priceWl) * BigInt(mintCount),
       enabled: false,
@@ -251,7 +251,7 @@ const Mint = () => {
             disabled={
               (mintingStatusWl && userWlBalance >= maxPerWl) ||
               !address ||
-              chain.id != 5
+              chain.id != 1
             }
           >
             Mint
@@ -283,7 +283,7 @@ const Mint = () => {
       address: AppConfig.contractAddress,
       abi: AppConfig.abi,
       functionName: "mint",
-      chainId: 5,
+      chainId: 1,
       args: [mintCount],
       value: BigInt(isPricePublicLoading ? 0 : pricePublic) * BigInt(mintCount),
       onError(error) {
@@ -327,7 +327,7 @@ const Mint = () => {
             disabled={
               (mintingStatusPublic && userBalance >= maxPerPublic) ||
               !address ||
-              chain.id != 5
+              chain.id != 1
             }
           >
             Mint
