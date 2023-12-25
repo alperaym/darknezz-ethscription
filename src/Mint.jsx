@@ -195,19 +195,20 @@ const Mint = () => {
   // -------------------------------------------------
 
   const whitelistMint = () => {
-    const { config: config } = usePrepareContractWrite({
+    const { config } = usePrepareContractWrite({
       address: AppConfig.contractAddress,
       abi: AppConfig.abi,
       functionName: "wlMint",
       chainId: 1,
-      args: [1, [...proofWl]],
+      args: [mintCount, [...proofWl]],
       value: BigInt(isPriceWlLoading ? 0 : priceWl) * BigInt(mintCount),
-      enabled: false,
+
       onError(error) {
         setError(error.message);
       },
     });
-    const { data, isLoading, isSuccess, write } = useContractWrite(config);
+    const { write, data, isLoading, isSuccess } = useContractWrite(config);
+
     // Track tx
     const {
       data: watchTx,
