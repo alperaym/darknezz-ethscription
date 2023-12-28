@@ -7,8 +7,10 @@ function App() {
         <div className="logo-cont">
           <div className="logo">
             <span>DARKNEZZ.</span>
+
             <Logo />
           </div>
+          <div className="soldout warning-text">SOLD OUT</div>
         </div>
         <div className="text">
           <div>555 darknezz come from darkness</div>
