@@ -1,54 +1,54 @@
 -------------------------------------------------------------
 Rarity Scores for Traits:
 -------------------------------------------------------------
-Background - Dark Jungle | rarity score = 278.00 | frequency = 2 / 556
-Skull - Alien | rarity score = 278.00 | frequency = 2 / 556
-Skull - Eths | rarity score = 278.00 | frequency = 2 / 556
-Background - Eths | rarity score = 278.00 | frequency = 2 / 556
-Headwear - Chromy | rarity score = 185.33 | frequency = 3 / 556
-Wings - Purple Angel's Wings | rarity score = 185.33 | frequency = 3 / 556
-Eyes Accessory - Purple Beam | rarity score = 111.20 | frequency = 5 / 556
-Background - Heaven | rarity score = 111.20 | frequency = 5 / 556
-Mouth Accessory - Gold Grillz Smoke | rarity score = 92.67 | frequency = 6 / 556
-Headwear - Crown | rarity score = 69.50 | frequency = 8 / 556
-Eyes Accessory - Vr Glasses | rarity score = 61.78 | frequency = 9 / 556
-Mouth Accessory - Vape | rarity score = 61.78 | frequency = 9 / 556
-Skull - Red | rarity score = 61.78 | frequency = 9 / 556
-Cloak - Eths Cloak | rarity score = 61.78 | frequency = 9 / 556
-Hand Artifact - Pitchfork | rarity score = 55.60 | frequency = 10 / 556
-Jewellery - Gold Necklace | rarity score = 46.33 | frequency = 12 / 556
-Background - Space | rarity score = 34.75 | frequency = 16 / 556
-Background - Hell | rarity score = 34.75 | frequency = 16 / 556
-Background - Dark Clouds | rarity score = 30.89 | frequency = 18 / 556
-Eyes Accessory - Censored | rarity score = 29.26 | frequency = 19 / 556
-Eyes Accessory - Nerd Glasses | rarity score = 29.26 | frequency = 19 / 556
-Cloak - White Cloak | rarity score = 29.26 | frequency = 19 / 556
-Skull - Gold | rarity score = 24.17 | frequency = 23 / 556
-Background - Morpheus | rarity score = 24.17 | frequency = 23 / 556
-Eyes Accessory - Dirty Blindfold | rarity score = 23.17 | frequency = 24 / 556
-Cloak - Red Cloak | rarity score = 23.17 | frequency = 24 / 556
-Cloak - Yellow Cloak | rarity score = 19.17 | frequency = 29 / 556
-Hand Artifact - Wand | rarity score = 18.53 | frequency = 30 / 556
-Hand Artifact - Cross | rarity score = 17.94 | frequency = 31 / 556
-Skull - Zombie | rarity score = 12.93 | frequency = 43 / 556
-Mouth Accessory - Rainfallbow | rarity score = 12.09 | frequency = 46 / 556
-Headwear - Blessed | rarity score = 10.69 | frequency = 52 / 556
-Background - Punk Blue | rarity score = 9.93 | frequency = 56 / 556
-Background - Red | rarity score = 9.75 | frequency = 57 / 556
-Background - Code | rarity score = 8.97 | frequency = 62 / 556
-Wings - Angel's Wings | rarity score = 7.04 | frequency = 79 / 556
-Climate - Rainfall | rarity score = 6.95 | frequency = 80 / 556
-Mouth Accessory - Cigarette | rarity score = 4.67 | frequency = 119 / 556
-Cloak - Gray Cloak | rarity score = 3.78 | frequency = 147 / 556
-Background - Gray | rarity score = 3.73 | frequency = 149 / 556
-Background - Black | rarity score = 3.71 | frequency = 150 / 556
-Eyes Accessory - Black Glasses | rarity score = 3.71 | frequency = 150 / 556
-Cloak - Black Cloak | rarity score = 3.68 | frequency = 151 / 556
-Eyes Accessory - Eyepatch | rarity score = 3.43 | frequency = 162 / 556
-Skull - Lightened | rarity score = 3.37 | frequency = 165 / 556
-Eyes Accessory - Cinema Glasses | rarity score = 3.37 | frequency = 165 / 556
-Jewellery - Gold Cross Pendant | rarity score = 3.18 | frequency = 175 / 556
-Headwear - Devil's Horns | rarity score = 3.16 | frequency = 176 / 556
-Cloak - Light Gray Cloak | rarity score = 3.14 | frequency = 177 / 556
-Jewellery - Gray Necklace | rarity score = 1.94 | frequency = 287 / 556
-Skull - Gray | rarity score = 1.78 | frequency = 312 / 556
+Background - Dark Jungle | rarity score = 277.50 | frequency = 2 / 555
+Skull - Alien | rarity score = 277.50 | frequency = 2 / 555
+Skull - Eths | rarity score = 277.50 | frequency = 2 / 555
+Background - Eths | rarity score = 277.50 | frequency = 2 / 555
+Headwear - Chromy | rarity score = 185.00 | frequency = 3 / 555
+Wings - Purple Angel's Wings | rarity score = 185.00 | frequency = 3 / 555
+Eyes Accessory - Purple Beam | rarity score = 111.00 | frequency = 5 / 555
+Background - Heaven | rarity score = 111.00 | frequency = 5 / 555
+Mouth Accessory - Gold Grillz Smoke | rarity score = 92.50 | frequency = 6 / 555
+Headwear - Crown | rarity score = 69.38 | frequency = 8 / 555
+Eyes Accessory - Vr Glasses | rarity score = 61.67 | frequency = 9 / 555
+Mouth Accessory - Vape | rarity score = 61.67 | frequency = 9 / 555
+Skull - Red | rarity score = 61.67 | frequency = 9 / 555
+Cloak - Eths Cloak | rarity score = 61.67 | frequency = 9 / 555
+Hand Artifact - Pitchfork | rarity score = 55.50 | frequency = 10 / 555
+Jewellery - Gold Necklace | rarity score = 46.25 | frequency = 12 / 555
+Background - Space | rarity score = 34.69 | frequency = 16 / 555
+Background - Hell | rarity score = 34.69 | frequency = 16 / 555
+Eyes Accessory - Censored | rarity score = 30.83 | frequency = 18 / 555
+Background - Dark Clouds | rarity score = 30.83 | frequency = 18 / 555
+Eyes Accessory - Nerd Glasses | rarity score = 29.21 | frequency = 19 / 555
+Cloak - White Cloak | rarity score = 29.21 | frequency = 19 / 555
+Skull - Gold | rarity score = 24.13 | frequency = 23 / 555
+Background - Morpheus | rarity score = 24.13 | frequency = 23 / 555
+Eyes Accessory - Dirty Blindfold | rarity score = 23.12 | frequency = 24 / 555
+Cloak - Red Cloak | rarity score = 23.12 | frequency = 24 / 555
+Cloak - Yellow Cloak | rarity score = 19.14 | frequency = 29 / 555
+Hand Artifact - Wand | rarity score = 18.50 | frequency = 30 / 555
+Hand Artifact - Cross | rarity score = 17.90 | frequency = 31 / 555
+Skull - Zombie | rarity score = 12.91 | frequency = 43 / 555
+Mouth Accessory - Rainfallbow | rarity score = 12.07 | frequency = 46 / 555
+Headwear - Blessed | rarity score = 10.67 | frequency = 52 / 555
+Background - Punk Blue | rarity score = 9.91 | frequency = 56 / 555
+Background - Red | rarity score = 9.91 | frequency = 56 / 555
+Background - Code | rarity score = 8.95 | frequency = 62 / 555
+Wings - Angel's Wings | rarity score = 7.03 | frequency = 79 / 555
+Climate - Rainfall | rarity score = 6.94 | frequency = 80 / 555
+Mouth Accessory - Cigarette | rarity score = 4.66 | frequency = 119 / 555
+Cloak - Gray Cloak | rarity score = 3.78 | frequency = 147 / 555
+Background - Gray | rarity score = 3.72 | frequency = 149 / 555
+Background - Black | rarity score = 3.70 | frequency = 150 / 555
+Eyes Accessory - Black Glasses | rarity score = 3.70 | frequency = 150 / 555
+Cloak - Black Cloak | rarity score = 3.68 | frequency = 151 / 555
+Eyes Accessory - Eyepatch | rarity score = 3.43 | frequency = 162 / 555
+Skull - Lightened | rarity score = 3.36 | frequency = 165 / 555
+Eyes Accessory - Cinema Glasses | rarity score = 3.36 | frequency = 165 / 555
+Headwear - Devil's Horns | rarity score = 3.17 | frequency = 175 / 555
+Jewellery - Gold Cross Pendant | rarity score = 3.17 | frequency = 175 / 555
+Cloak - Light Gray Cloak | rarity score = 3.15 | frequency = 176 / 555
+Jewellery - Gray Necklace | rarity score = 1.93 | frequency = 287 / 555
+Skull - Gray | rarity score = 1.78 | frequency = 311 / 555
